@@ -3,17 +3,14 @@ package com.mynotesapp.server.mynotesappserver;
 
 import com.mynotesapp.server.mynotesappserver.Entities.Course;
 import com.mynotesapp.server.mynotesappserver.services.CourseService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5176")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api")
 public class DemoController {
     private CourseService courseService;
@@ -31,6 +28,12 @@ public class DemoController {
     @GetMapping("/list")
     public List<Course> getCourses(){
         return courseService.getAll();
+    }
+
+
+    @PostMapping("/list")
+    public Course addCourse(@RequestBody Course course){
+        return courseService.saveCourse(course);
     }
 
 }

@@ -6,32 +6,24 @@ import jakarta.persistence.*;
 @Table(name = "courses")
 public class Course {
 
-    public String getCourse() {
-        return course;
-    }
 
-    public void setCourse(String course) {
-        this.course = course;
-    }
 
-    public String getSubjects() {
-        return subjects;
-    }
-
-    public void setSubjects(String subjects) {
-        this.subjects = subjects;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="id")
     private int id;
 
-    @Column(name = "course")
-    private String course;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "subjects")
-    private String subjects;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
