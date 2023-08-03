@@ -6,16 +6,16 @@ import jakarta.persistence.*;
 @Table(name = "subtopics")
 public class SubTopics {
     @Id
-    @Column(name = "subtopic_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int subtopicId;
+    @Column(name = "slug")
+    private String subtopicSlug;
 
-    public int getSubtopicId() {
-        return subtopicId;
+
+    public String getSubtopicSlug() {
+        return subtopicSlug;
     }
 
-    public void setSubtopicId(int subtopicId) {
-        this.subtopicId = subtopicId;
+    public void setSubtopicSlug(String subtopicSlug) {
+        this.subtopicSlug = subtopicSlug;
     }
 
     public String getSubtopicName() {
@@ -41,5 +41,13 @@ public class SubTopics {
     @JoinColumn(name = "id")
     private Course course;
 
-    // Getters and setters, constructors, etc.
+
+    @PrePersist
+    private void generateSubTopicSlug() {
+        this.subtopicSlug = generateSlugFromName(this.subtopicName);
+    }
+
+    private String generateSlugFromName(String name){
+        return name.replace(" ", "").toLowerCase();
+    }
 }

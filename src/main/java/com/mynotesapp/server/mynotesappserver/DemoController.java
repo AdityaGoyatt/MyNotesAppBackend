@@ -2,9 +2,11 @@ package com.mynotesapp.server.mynotesappserver;
 
 
 import com.mynotesapp.server.mynotesappserver.Entities.Course;
+import com.mynotesapp.server.mynotesappserver.Entities.Part;
 import com.mynotesapp.server.mynotesappserver.Entities.PostCourseSubtopic;
 import com.mynotesapp.server.mynotesappserver.Entities.SubTopics;
 import com.mynotesapp.server.mynotesappserver.services.CourseService;
+import com.mynotesapp.server.mynotesappserver.services.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,10 +19,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class DemoController {
     private CourseService courseService;
+    public PartService partService;
 
-
-    public DemoController (CourseService courseService){
+    public DemoController (CourseService courseService, PartService partService){
         this.courseService = courseService;
+        this.partService = partService;
     }
 
     @GetMapping("/message")
@@ -61,10 +64,25 @@ public class DemoController {
         var dbCourse = courseService.saveCourse(course);
         var dbSubTopic = postCourseSubtopic.getSubTopics();
         dbSubTopic.setCourse(dbCourse);
-        courseService.save(dbSubTopic);
+        courseService.saveSubtopic(dbSubTopic);
         postCourseSubtopic.setSubTopics(dbSubTopic);
         postCourseSubtopic.setCourse(dbCourse);
     return postCourseSubtopic;
+    }
+
+    @PostMapping("/part")
+    public Part savePart(@RequestBody Part part){
+        return partService.save(part);
+    }
+    @GetMapping("/part")
+    public List<Part> findPart(@RequestBody SubTopics subTopics){
+        return partService.findBySubTopic(subTopics);
+    }
+    @GetMapping("/partall")
+    public List<Part> findAllPart(){
+
+            return partService.find();
+
     }
 }
 

@@ -38,10 +38,6 @@ public class CourseService {
         return result.get();
     }
 
-    public SubTopics save(SubTopics subTopics){
-        var dbSubtopic = subTopicRepository.save(subTopics);
-        return subTopics;
-    }
 
     public List<SubTopics> findByCourse(Course course){
         var list = subTopicRepository.findByCourse(course);
