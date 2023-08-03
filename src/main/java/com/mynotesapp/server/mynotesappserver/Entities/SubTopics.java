@@ -44,10 +44,6 @@ public class SubTopics {
 
     @PrePersist
     private void generateSubTopicSlug() {
-        this.subtopicSlug = generateSlugFromName(this.subtopicName);
-    }
-
-    private String generateSlugFromName(String name){
-        return name.replace(" ", "").toLowerCase();
+        this.subtopicSlug = SlugNameSetter.setSlugByName(this.subtopicName);
     }
 }

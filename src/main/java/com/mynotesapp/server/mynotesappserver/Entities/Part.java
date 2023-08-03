@@ -44,12 +44,6 @@ public class Part {
 
     @PrePersist
     private void generatePartSlugWithName(){
-        this.partSlug = generateByName(this.partName);
-    }
-
-    private String generateByName(String partName) {
-        return  partName.replace(" ", "").toLowerCase();
-    }
-
+        this.partSlug =SlugNameSetter.setSlugByName(this.partName);}
 
 }
