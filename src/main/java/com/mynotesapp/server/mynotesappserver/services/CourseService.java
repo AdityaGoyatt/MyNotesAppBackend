@@ -6,7 +6,6 @@ import com.mynotesapp.server.mynotesappserver.Repositories.CourseRepository;
 import com.mynotesapp.server.mynotesappserver.Repositories.SubTopicRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public List<Course> getAll(){
+    public List<Course> findAll(){
         var result = courseRepository.findAll();
         return result;
     }
@@ -45,8 +44,8 @@ public class CourseService {
     }
 
     public SubTopics saveSubtopic(SubTopics subTopics){
-       var dbSubtopic =  subTopicRepository.save(subTopics);
-       return subTopics;
+        var dbSubtopic =  subTopicRepository.save(subTopics);
+        return subTopics;
     }
 
 }

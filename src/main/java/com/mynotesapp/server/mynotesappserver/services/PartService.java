@@ -16,6 +16,11 @@ public class PartService {
     public List<Part> findBySubTopic(SubTopics subTopics){
         return partsRepository.findBySubTopic(subTopics);
     }
+    public Part findById(String partSlug){
+        var result = partsRepository.findById(partSlug);
+        if(!result.isPresent()) throw new RuntimeException("part with this slug doesnt exist");
+        return result.get();
+    }
 
     public List<Part> find(){
         return partsRepository.findAll();

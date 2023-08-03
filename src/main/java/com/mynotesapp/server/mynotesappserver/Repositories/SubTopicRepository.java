@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SubTopicRepository extends JpaRepository<SubTopics, Integer> {
+public interface SubTopicRepository extends JpaRepository<SubTopics, String> {
     List<SubTopics> findByCourse(Course course);
 }
 
