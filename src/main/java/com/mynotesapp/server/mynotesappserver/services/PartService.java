@@ -18,6 +18,7 @@ public class PartService {
     }
     public Part findById(String partSlug){
         var result = partsRepository.findById(partSlug);
+
         if(!result.isPresent()) throw new RuntimeException("part with this slug doesnt exist");
         return result.get();
     }

@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -18,21 +19,22 @@ import java.util.UUID;
 public class TopicService {
     private TopicRepository topicRepository;
     private final String imageDirectory = "src/main/resources/static/images/";
+    private final String imageBaseUrl = "http://localhost:8080/api";
 
 
     public String saveImage(MultipartFile imageFile, String imageType) throws IOException {
         String fileName = generateUniqueFileName(imageFile);
-        String imagePath = imageDirectory + imageType + "/" + fileName;
+        String relativeImagePath = imageType + "/" + fileName;
 
         // Create the target directory if it doesn't exist
         File targetDirectory = new File(imageDirectory + imageType);
         targetDirectory.mkdirs();
 
         // Copy the uploaded image to the target directory
-        Path targetPath = Path.of(imagePath);
+        Path targetPath = Path.of(imageDirectory, relativeImagePath);
         Files.copy(imageFile.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-
-        return "/images/" + imageType + "/" + fileName; // Return the image path for saving in the database
+        URI imageUrl = URI.create(imageBaseUrl + "/" + relativeImagePath);
+        return imageUrl.toString();
     }
 
     private String generateUniqueFileName(MultipartFile file) {

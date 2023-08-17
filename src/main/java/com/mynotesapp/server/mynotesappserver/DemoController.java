@@ -85,16 +85,21 @@ public class DemoController {
     }
 
     @GetMapping("/topic/{topicSlug}")
-    public Topic findMainTopic(@PathVariable String topicSlug) {
-        return topicService.findById(topicSlug);
+    public Topic findMainTopic(@PathVariable String topicSlug)
+    {
+        var result = topicService.findById(topicSlug);
+        return result;
     }
+
 
 
     @PostMapping("/topic")
     public Topic saveTopic(@ModelAttribute RecievedTopic recievedTopic) throws IOException {
+        System.out.println(recievedTopic);
         Topic toSaveTopic = new Topic();
         toSaveTopic.setName(recievedTopic.getName());
-        toSaveTopic.setPart(partService.findById(recievedTopic.getPartSlug()));
+        Part part = partService.findById(recievedTopic.getPartSlug());
+        toSaveTopic.setPart(part);
         toSaveTopic.setResultComment(recievedTopic.getResultComment());
         toSaveTopic.setSyntaxComment(recievedTopic.getSyntaxComment());
 

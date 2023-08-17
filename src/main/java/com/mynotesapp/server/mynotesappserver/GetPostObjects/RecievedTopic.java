@@ -9,6 +9,20 @@ public class RecievedTopic {
     private String topicSlug;
     private String name;
     private MultipartFile syntaxImage;
+
+    @Override
+    public String toString() {
+        return "RecievedTopic{" +
+                "topicSlug='" + topicSlug + '\'' +
+                ", name='" + name + '\'' +
+                ", syntaxImage=" + syntaxImage +
+                ", syntaxComment='" + syntaxComment + '\'' +
+                ", resultImage=" + resultImage +
+                ", resultComment='" + resultComment + '\'' +
+                ", partSlug='" + partSlug + '\'' +
+                '}';
+    }
+
     private String syntaxComment;
     private MultipartFile resultImage;
     private String resultComment;
