@@ -6,9 +6,15 @@ import com.mynotesapp.server.mynotesappserver.services.CourseService;
 import com.mynotesapp.server.mynotesappserver.services.PartService;
 import com.mynotesapp.server.mynotesappserver.services.SubTopicService;
 import com.mynotesapp.server.mynotesappserver.services.TopicService;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @RestController
@@ -109,6 +115,20 @@ public class DemoController {
         toSaveTopic.setResultImage(resultImagePath);
         return topicService.save(toSaveTopic);
     }
+
+    @GetMapping("/{imageType}/{fileName:.+}")
+    public ResponseEntity<Resource> getImage(@PathVariable String imageType, @PathVariable String fileName) throws IOException {
+        String imagePath = "src/main/resources/static/images/" + imageType + "/" + fileName;
+        Path imagePathObj = Path.of(imagePath);
+
+        if (Files.exists(imagePathObj)) {
+            Resource imageResource = new UrlResource(imagePathObj.toUri());
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_JPEG) // Change the content type if needed
+                    .body(imageResource);
+        } else {
+            return ResponseEntity.notFound().build();}
+}
 
 }
 
