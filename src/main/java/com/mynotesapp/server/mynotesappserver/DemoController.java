@@ -35,7 +35,7 @@ public class DemoController {
         this.subTopicService = subTopicService;
     }
 
-
+    /////////////////////////////////////////////////////////////////////////////////Root Directory functions
     @GetMapping("/courses")
     public Directory<Course,SubTopics> getCourses(){
         Directory<Course,SubTopics> coursesAndSubtopics = new Directory<>();
@@ -58,6 +58,7 @@ public class DemoController {
         postCourseSubtopic.setCourse(dbCourse);
         return postCourseSubtopic;
     }
+    /////////////////////////////////////////////////////////////////////////////////////SubTopic Functions
 
     @GetMapping("/courses/{subtopicSlug}")
     public SubTopics getSubTopicBySlug(@PathVariable String subtopicSlug){
@@ -71,6 +72,8 @@ public class DemoController {
        return dbSubTopic;
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////////////Parts Functions
 
     @PostMapping("/part")
     public Part savePart(@RequestBody Part part){
@@ -90,10 +93,14 @@ public class DemoController {
         return topics;
     }
 
+
+    //////////////////////////////////////////////////////////////////////////////// Main Topic Functions
     @GetMapping("/topic/{topicSlug}")
     public Topic findMainTopic(@PathVariable String topicSlug)
     {
+        System.out.println(topicSlug);
         var result = topicService.findById(topicSlug);
+        System.out.println(result.getTopicSlug());
         return result;
     }
 
@@ -115,6 +122,8 @@ public class DemoController {
         toSaveTopic.setResultImage(resultImagePath);
         return topicService.save(toSaveTopic);
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////Image Url Functions
 
     @GetMapping("/{imageType}/{fileName:.+}")
     public ResponseEntity<Resource> getImage(@PathVariable String imageType, @PathVariable String fileName) throws IOException {
